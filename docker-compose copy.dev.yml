@@ -1,0 +1,12 @@
+version: '3'
+services:
+  node_app:
+    container_name: my_web_container  # Fixed the service name indentation
+    build: . 
+    volumes:
+      - ./src:/app/src:ro  # Fixed the indentation for volumes and added space after '-'
+    environment:
+      - node_en:develpement
+    ports:
+     - "3000:3000"
+    

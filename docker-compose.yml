@@ -1,0 +1,10 @@
+version: '3'
+services:
+  node_app:
+    container_name: my_web_container  # Fixed the service name indentation
+    build: . 
+    environment:
+      - NODE_ENV=prod
+    ports:
+     - "3000:3000"
+    

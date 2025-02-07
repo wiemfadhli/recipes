@@ -1,0 +1,79 @@
+.form-container {
+    width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2, h3 {
+    text-align: center;
+    color: #333;
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+    margin: 10px 0 5px;
+  }
+  
+  input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  .input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: space-between; /* Space between buttons */
+    align-items: center;
+    margin-top: 15px;
+    gap: 10px; /* Add spacing between buttons */
+  }
+  
+  .add-btn, .submit-btn, .cancel-btn {
+    flex: 1; /* Make buttons equal width */
+    max-width: 48%; /* Ensure they don’t take full width */
+    text-align: center;
+    font-size: 16px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    padding: 10px;
+  }
+  .add-btn{
+    background: #4c4ce7;
+    margin-top: 15px;
+    gap: 10px; /* Add spacing between buttons */
+  }
+  .submit-btn {
+    background: #28a745;
+  }
+  
+  .cancel-btn {
+    background: #ff0004;
+    margin-right: 0; /* Remove incorrect margin */
+  }
+  
+  /* Hover effect */
+  .add-btn:hover, .submit-btn:hover, .cancel-btn:hover {
+    opacity: 0.8;
+  }
+  

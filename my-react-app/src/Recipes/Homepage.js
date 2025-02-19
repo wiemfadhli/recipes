@@ -1,7 +1,8 @@
 import HomeSharpIcon from '@mui/icons-material/HomeSharp';
 import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
 import {  Link } from "react-router-dom";
-import {  ListRecipe} from './Recipestypes'
+import {  ListRecipe,RecipeDetails} from './Recipestypes';
+import {Recipesbytype} from './Recipesbytype ';
 const Image_home = () => {
   return (
       <div
@@ -31,6 +32,16 @@ return (
   </>
 );
 }
+export const Recipe_page=()=>
+{
+return (<>
+<Recipesbytype></Recipesbytype>
+
+</>);
+}
+
+
+
 export const Navbar  = () => {
   return (
     <header

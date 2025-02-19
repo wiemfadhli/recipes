@@ -1,14 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { Footer ,Navbar , Home_page,Recipe_page} from './Recipes/Homepage';
+import {  Authentication,Singup} from './Recipes/authentication'
 
 
-
-
-const App = () => {
-  return (
-    <>
-    <Router>
+/*
+  <Router>
       <Navbar  />
       <Routes>
       <Route path="/" element={< Home_page/>} />
@@ -16,6 +13,12 @@ const App = () => {
       </Routes>
       <Footer />
     </Router>
+*/
+
+const App = () => {
+  return (
+    <>
+<Singup></Singup>
 
     </>
   );

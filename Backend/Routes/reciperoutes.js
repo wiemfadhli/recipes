@@ -1,34 +1,52 @@
 const express = require('express');
 const router = express.Router();
-// Route to get all recipes
-router.get('all/', (req, res)=>
+const Recipe = require('../Models/recipes');
+// get all recipes
+router.get('/all', async (req, res)=>
 {
-    res.send('Hello, World!');
+    try {
+        const recipes = await Recipe.find();
+        res.json(recipes);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+);
+
+//add recipe 
+router.post("/add", async (req, res) => {
+    try {
+        const recipe = new Recipe(req.body);
+        await recipe.save();
+        res.send("ok");
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
 });
 
-// Route to get a recipe by groupe
-router.get('/:groupe', (req, res)=>
-    {
-        const id = req.params.groupe;
-        res.send(id);
-    });
-
-  // Route to add new a recipe 
-  
-  router.post('/', (req, res) => {
-    const recipe = req.body.name;  
-    res.send(recipe);  
+//get by recipe by type 
+router.get('/:type', async (req, res) => {
+    const type = req.params.type;
+    try {
+        const recipes = await Recipe.find({ type: type }); // Filter by type
+        res.json(recipes);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
-//Route to delete a recipe 
-router.delete('/:id', (req, res)=>
-    {
-        const id = req.params.id;
-        res.send(id);
-    });
-    router.put('/', (req, res) => {
-        const recipe = req.body.name;  
-        res.send(recipe);  
-    });
+//get by recipe by type 
+router.delete('/:id', async (req, res) => {
+    const type = req.params.type;
+    try {
+        const recipes = await Recipe.find({ type: type }); // Filter by type
+        res.json(recipes);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+// delete 
 
-    module.exports = router;
+
+
+module.exports = router;
 

@@ -3,7 +3,7 @@ import "./RecipeForm.css"; // Import the CSS file
 
 export const RecipeForm = ({ onSubmit }) => {
   const [recipe, setRecipe] = useState({
-    url: "",
+    url: "1.png",
     Prep: "",
     Cook: "",
     title: "",
@@ -26,20 +26,66 @@ export const RecipeForm = ({ onSubmit }) => {
     setRecipe({ ...recipe, [field]: [...recipe[field], ""] });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(recipe);
+    console.log("Submitting recipe:", recipe);  // Log the data before sending
+  
+    try {
+      const response = await fetch("http://localhost:4000/recipes/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(recipe),
+      });
+  
+      console.log("Response status:", response.status);  // Log response status
+  
+      // Check if the response contains JSON data
+      const contentType = response.headers.get("content-type");
+      const responseData = contentType?.includes("application/json")
+        ? await response.json()  // Parse JSON response if it's in JSON format
+        : await response.text();  // Otherwise, handle as plain text
+  
+      console.log("Server Response:", responseData);  // Log the response body
+  
+      if (response.ok) {
+        // Success: Clear form and display success message
+        alert(`Recipe added successfully! Server message: ${responseData.message || "Recipe added!"}`);
+        setRecipe({
+          url: "",
+          title: "",
+          Prep: "",
+          Cook: "",
+          prestation: "",
+          Ingredients: [""],
+          Method: [""],
+        });
+      } else {
+        // Error: Display server error message
+        alert(`Error adding recipe: ${responseData.message || responseData || "Unknown error"}`);
+      }
+    } catch (error) {
+      // Network Error: Display network error message
+      console.error("Network Error:", error);
+      alert("Failed to add recipe. Please check your network connection.");
+    }
   };
+  
+  
+  
+
+
   const handleCancel = () => {
-   setRecipe({
-    url: "",
-    title: "",
-    Prep: "",
-    Cook: "",
-    prestation: "",
-    Ingredients: [""],
-    Method: [""],
-})
+    setRecipe({
+      url: "",
+      title: "",
+      Prep: "",
+      Cook: "",
+      prestation: "",
+      Ingredients: [""],
+      Method: [""],
+    });
   };
 
   return (
@@ -69,9 +115,11 @@ export const RecipeForm = ({ onSubmit }) => {
             />
           </div>
         ))}
-        <button type="button" className="add-btn" onClick={() => addField("Ingredients")}>+ Add Ingredient</button>
+        <button type="button" className="add-btn" onClick={() => addField("Ingredients")}>
+          + Add Ingredient
+        </button>
 
-        <h3> ADD Method </h3>
+        <h3>Method</h3>
         {recipe.Method.map((step, index) => (
           <div key={index} className="input-group">
             <input
@@ -82,15 +130,19 @@ export const RecipeForm = ({ onSubmit }) => {
             />
           </div>
         ))}
-        <button type="button" className="add-btn" onClick={() => addField("Method")}>+ Add Method </button>
+        <button type="button" className="add-btn" onClick={() => addField("Method")}>
+          + Add Method
+        </button>
 
         <div className="button-group">
-  <button type="submit" className="submit-btn">Submit</button>
-  <button type="button" className="cancel-btn" onClick={handleCancel}>Cancel</button>
-</div>
+          <button type="submit" className="submit-btn">
+            Submit
+          </button>
+          <button type="button" className="cancel-btn" onClick={handleCancel}>
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );
 };
-
-

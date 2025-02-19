@@ -25,9 +25,11 @@ function  Recipe  (props)
     export const  ListRecipe=()=>
     {
         return (
-            <div style={{ width: "80%", height: "600px",  marginTop: "10px" ,}}>
-  <h1 style={{ textAlign: "center",color: "white", backgroundColor:"hsla(120, 4.50%, 39.00%, 0.47)",height:"50px" }}>Recipe Collections</h1>
-  <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <div style={{ width: "100%", height: "700px",  marginTop: "-10px" ,textAlign: "center", marginbottom: "30px", 
+            
+            }}>
+
+  <table style={{ width: "100%", borderCollapse: "collapse" ,textAlign: "center", marginLeft:"60px"}}>
     <tr>
       <td style={{ width: "33%" }}>
         <Recipe text="Delicious Dinner Recipe " image="1.png" key={1} />

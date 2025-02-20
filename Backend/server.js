@@ -4,6 +4,7 @@ const cors = require('cors');  // Import the cors package
 const connectDB = require('./config/conDB');
 const mongoose = require('mongoose');
 const recipeRoutes = require('./Routes/reciperoutes'); // Corrected path
+const userRoutes = require('./Routes/userRoutes');
 
 const app = express();
 const port = 4000;
@@ -19,6 +20,7 @@ connectDB();
 
 // Use the recipe routes
 app.use('/recipes', recipeRoutes);
+app.use("/user",userRoutes)
 
 // Start the server
 app.listen(port, () => {

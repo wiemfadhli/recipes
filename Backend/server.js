@@ -22,8 +22,12 @@ connectDB();
 app.use('/recipes', recipeRoutes);
 app.use("/user",userRoutes)
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
+module.exports = app;
+
+// Start the server in a separate file (for production use)
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`Server is running at http://localhost:${port}`);
+  });
+}
 

@@ -60,4 +60,15 @@
   .signup-link:hover {
     text-decoration: underline;
   }
+  .delete_btn
+  {
+ 
+
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
   

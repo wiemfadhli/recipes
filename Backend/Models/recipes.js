@@ -9,6 +9,7 @@ const recipeSchema = new mongoose.Schema({
     prestation: String,
     Ingredients: [String],
     Method: [String],
+    type:String,
 });
 
 // Corrected export: Export the model using the recipeSchema

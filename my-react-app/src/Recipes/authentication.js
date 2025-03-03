@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import './Authentication.css'; // Import the CSS file
+import React, { useState ,useEffect} from 'react';
+import './Authentication.css'; 
 import { TextField, Button, InputAdornment } from '@mui/material';
-import { AccountCircle, Lock ,Email} from '@mui/icons-material'; // Material-UI icons
+import { AccountCircle, Lock ,Email} from '@mui/icons-material'; 
 
 
 
@@ -11,14 +11,81 @@ export const Singup = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passwordsMatch, setPasswordsMatch] = useState(true); // Flag for password matching
+    const [success, setSuccess] = useState(false);
+
+
+
+    /************************************************************ */
   
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
-      // Handle form submission logic here (e.g., API call)
-      console.log('Username:', username);
-      console.log('Email:', email);
-      console.log('Password:', password);
+      const user={
+        "username": username,
+        "email":email,
+        "password":password
+      }
+      try {
+        const response = await fetch("http://localhost:4000/user", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        });
+    
+        console.log("Response status:", response.status);  // Log response status
+    
+        // Check if the response contains JSON data
+        const contentType = response.headers.get("content-type");
+        const responseData = contentType?.includes("application/json")
+          ? await response.json()  // Parse JSON response if it's in JSON format
+          : await response.text();  // Otherwise, handle as plain text
+    
+        console.log("Server Response:", responseData);  // Log the response body
+    
+        if (response.ok) {
+          setSuccess(true);
+
+        } else {
+          // Error: Display server error message
+          alert(`Error adding recipe: ${responseData.message || responseData || "Unknown error"}`);
+        }
+      } catch (error) {
+        // Network Error: Display network error message
+        console.error("Network Error:", error);
+        alert("Failed to add recipe. Please check your network connection.");
+      }
+
+
+
+
     };
+
+
+    useEffect(() => {
+      if (success) {
+          setUsername("");
+          setEmail("");
+          setPassword("");
+          setConfirmPassword("");
+
+          setSuccess(false);
+      }
+  }, [success]); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
     // Check if passwords match
     const handlePasswordChange = (e) => {
@@ -130,12 +197,37 @@ export const Authentication = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here (e.g., API call)
-    console.log('Username:', username);
-    console.log('Password:', password);
-  };
+    alert(username + password);
+
+    try {
+        const url = `http://localhost:4000/user/login/${encodeURIComponent(username)}/${encodeURIComponent(password)}`;
+
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
+        console.log("Response status:", response.status); // Should be 200
+
+        const contentType = response.headers.get("content-type");
+        const responseData = contentType?.includes("application/json")
+            ? await response.json()  
+            : await response.text();  
+            if (responseData === false) {
+              alert("No connection or invalid response.");
+          }
+     
+
+
+    } catch (error) {
+        console.error("Network Error:", error);
+        alert("Failed to fetch user data. Please check your network connection.");
+    }
+};
 
   return (
     <>

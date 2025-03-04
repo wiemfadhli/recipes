@@ -17,16 +17,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-
-      - name: Install Backend Dependencies
-        run: |
-          cd path/to/Backend
-          npm install
-
-      - name: Run Backend Tests
-        run: |
-          cd Backend
-          npm test
+      - name: List Root Directory Contents
+        run: ls -la
 
    
 

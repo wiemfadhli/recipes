@@ -17,19 +17,19 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-      - name: List Root Directory Contents
-        run: ls -la
-      - name: List Contents of 'Backend' Directory
-        run: |
-          if [ -d "Backend" ]; then
-            echo "Backend directory exists"
-            ls -la Backend
-          else
-            echo "Backend directory does not exist"
-          fi
 
-   
+      - name: Install Backend Dependencies
+        run: npm install
+        working-directory: ./Backend
 
-     
+      - name: Run Backend Tests
+        run: npm test
+        working-directory: ./Backend
 
- 
+      - name: Install Frontend Dependencies
+        run: npm install
+        working-directory: ./my-react-app
+
+      - name: Run Frontend Tests
+        run: npm test
+        working-directory: ./my-react-app

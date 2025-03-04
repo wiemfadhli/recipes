@@ -19,6 +19,14 @@ jobs:
           node-version: '18'
       - name: List Root Directory Contents
         run: ls -la
+      - name: List Contents of 'Backend' Directory
+        run: |
+          if [ -d "Backend" ]; then
+            echo "Backend directory exists"
+            ls -la Backend
+          else
+            echo "Backend directory does not exist"
+          fi
 
    
 

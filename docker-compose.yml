@@ -1,10 +1,47 @@
-version: '3'
+version: "3.8"
+
 services:
-  node_app:
-    container_name: my_web_container  # Fixed the service name indentation
-    build: . 
-    environment:
-      - NODE_ENV=prod
+  # Backend Service (Node.js + MongoDB)
+  backend:
+    build:
+      context: ./Backend  # Path to the backend folder
     ports:
-     - "3000:3000"
-    
+      - "4000:4000"        # Map port 4000 of the container to the host
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/Recipes  # MongoDB connection string
+    depends_on:
+      - mongo                # Ensure MongoDB starts first
+    volumes:
+      - ./Backend:/app
+      - /app/node_modules
+    networks:
+      - my_network
+
+  # MongoDB Service
+  mongo:
+    image: mongo:latest  # Use the official MongoDB image
+    ports:
+      - "27017:27017"    # Expose MongoDB port
+    volumes:
+      - mongo_data:/data/db  # Persist MongoDB data across container restarts
+    restart: always
+    networks:
+      - my_network
+
+  # Frontend Service (React App)
+  frontend:
+    build:
+      context: ./my-react-app # Path to the frontend folder (where the React app Dockerfile is located)
+    ports:
+      - "3000:3000"        # Map port 3000 of the container to the host
+    depends_on:
+      - backend             # Ensure the backend is ready before frontend starts
+    networks:
+      - my_network
+
+volumes:
+  mongo_data:  # Named volume to persist MongoDB data
+
+networks:
+  my_network:
+    driver: bridge  # Create a custom network for better isolation
